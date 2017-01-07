@@ -1,8 +1,7 @@
 <?php
 session_start();
-
-if(isset($_SESSION['usr_id'])) {
-	header("Location: index.php");
+if(isset($_SESSION['usr_id'])=="") {
+	header("Location: login.php");
 }
 
 include_once 'dbconnect.php';
@@ -13,14 +12,22 @@ $error = false;
 
 //check if form is submitted
 if (isset($_POST['taskcreate'])) {
-	$name = mysqli_real_escape_string($con, $_POST['task-name']);
-	$desc = mysqli_real_escape_string($con, htmlspecialchars($_POST['task-desc']));
-	$image = mysqli_real_escape_string($con, $_POST['task-image']);
+	$tname = mysqli_real_escape_string($con, $_POST['task-name']);
+	$tdesc = mysqli_real_escape_string($con, htmlspecialchars($_POST['task-desc']));
+	$timage = mysqli_real_escape_string($con, $_POST['task-image']);
+    if($timage == "") {
+        $newtimage = "no-media.jpg";
+    } else {
+        $newtimage = $timage;
+    }
+    
+    $sql = "INSERT INTO tasks (task_name, task_desc, task_image) VALUES ('".$tname."', '".$tdesc."', '".$newtimage."')";
 
-    if(mysqli_query($con, "INSERT INTO tasks (name, desc, image) VALUES('" . $name . "', '" . $desc . "', '" . $image . "')")) {
+    if ($con->query($sql) === TRUE) {
         header("Location: tasks.php");
     } else {
         echo '<h3 style="text-align: center;">The task could not be created!</h3>';
+        echo '<span style="text-align: center;">Error: ' . $sql . '<br>' . $con->error . '</span>';
     }
 }
 ?>
@@ -38,7 +45,7 @@ if (isset($_POST['taskcreate'])) {
                             <textarea class="form-control" id="task-desc" name="task-desc" required rows="3" placeholder="Task Description"></textarea>
                         </div>
                         <div class="form-group">
-                            <input type="file" class="form-control" value="no-media.jpg" id="task-image" name="task-image">
+                            <input type="file" class="form-control" id="task-image" name="task-image">
                         </div>
                         <button class="btn btn-primary btn-lg btn-block" type="submit" name="taskcreate">Add Task</button>
                     </form>
