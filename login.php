@@ -18,6 +18,7 @@ if (isset($_POST['login'])) {
         $_SESSION['usr_id'] = $row['id'];
         $_SESSION['usr_name'] = $row['name'];
         $_SESSION['usr_email'] = $row['email'];
+        $_SESSION['usr_type'] = $row['account_type'];
         header("Location: tasks.php");
     } else {
         $errormsg = '<h3 style="text-align: center;">Incorrect Email or Password!</h3>';

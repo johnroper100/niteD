@@ -4,40 +4,37 @@ if(isset($_SESSION['usr_id'])=="") {
 	header("Location: login.php");
 }
 
-include_once 'dbconnect.php';
-include 'header.php';
+if ($_SESSION['usr_type']=="admin" || $_SESSION['usr_type']=="mod") {
+    include_once 'dbconnect.php';
+    include 'header.php';
 
-//set validation error flag as false
-$error = false;
+    //set validation error flag as false
+    $error = false;
 
-//check if form is submitted
-if (isset($_POST['signup'])) {
-	$name = mysqli_real_escape_string($con, $_POST['signup-name']);
-	$email = mysqli_real_escape_string($con, $_POST['signup-email']);
-	$password = mysqli_real_escape_string($con, $_POST['signup-pass']);
-	$cpassword = mysqli_real_escape_string($con, $_POST['signup-pass-conf']);
-	
-	//name can contain only alpha characters and space
-	if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
-		$error = true;
-		$name_error = "Name must contain only alphabets and space";
-	}
-	if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
-		$error = true;
-		$email_error = "Please Enter Valid Email ID";
-	}
-	if($password != $cpassword) {
-		$error = true;
-		$cpassword_error = "Password and Confirm Password doesn't match";
-	}
-	if (!$error) {
-		if(mysqli_query($con, "INSERT INTO users(name,email,password) VALUES('" . $name . "', '" . $email . "', '" . md5($password) . "')")) {
-			header("Location: tasks.php");
-		} else {
-			$errormsg = '<h3 style="text-align: center;">Error in registering...Please try again later!</h3>';
-		}
-	}
-}
+    //check if form is submitted
+    if (isset($_POST['signup'])) {
+        $name = mysqli_real_escape_string($con, $_POST['signup-name']);
+        $email = mysqli_real_escape_string($con, $_POST['signup-email']);
+        $password = mysqli_real_escape_string($con, $_POST['signup-pass']);
+        $acc_type = mysqli_real_escape_string($con, $_POST['signup-account-type']);
+
+        //name can contain only alpha characters and space
+        if (!preg_match("/^[a-zA-Z ]+$/",$name)) {
+            $error = true;
+            $name_error = "Name must contain only alphabets and space";
+        }
+        if(!filter_var($email,FILTER_VALIDATE_EMAIL)) {
+            $error = true;
+            $email_error = "Please Enter Valid Email ID";
+        }
+        if (!$error) {
+            if(mysqli_query($con, "INSERT INTO users(name,email,password,account_type) VALUES('" . $name . "', '" . $email . "', '" . md5($password) . "', '" . $acc_type . "')")) {
+                header("Location: tasks.php");
+            } else {
+                $errormsg = '<h3 style="text-align: center;">Error in adding new user...Please try again later!</h3>';
+            }
+        }
+    }
 ?>
 <?php if (isset($errormsg)) { echo $errormsg; } ?>
 <div class="row masonry-container">
@@ -57,7 +54,12 @@ if (isset($_POST['signup'])) {
                             <input type="password" class="form-control" placeholder="Password" id="signup-pass" name="signup-pass" required>
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" value="" placeholder="Confirm Password" id="signup-pass-conf" name="signup-pass-conf" required>
+                            <select class="form-control" id="signup-account-type" name="signup-account-type">
+                              <option value="admin">Administrator</option>
+                              <option value="mod">Moderator</option>
+                              <option value="user">User</option>
+                              <option value="guest">Guest</option>
+                            </select>
                         </div>
                         <button class="btn btn-primary btn-lg btn-block" type="submit" name="signup">Add User</button>
                     </form>
@@ -66,4 +68,4 @@ if (isset($_POST['signup'])) {
         </div>
     </div>
 </div>
-<?php include 'footer.php'; ?>
+<?php include 'footer.php'; } ?>

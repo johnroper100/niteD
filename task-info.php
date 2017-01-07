@@ -38,7 +38,7 @@ if ($row = mysqli_fetch_array($result)) {
                 <p class="card-text"><?php echo $row['task_desc'];?></p>
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskdeleteform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
-                    <button class="btn btn-primary" type="submit" name="taskdelete">Delete Task</button>
+                    <button class="btn btn-danger" type="submit" name="taskdelete">Close Task</button>
                 </form>
             </div>
         </div>
