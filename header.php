@@ -6,7 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         
-        <title>niteD - Project Management System</title>
+        <?php
+        include_once 'dbconnect.php';
+        $result_login = mysqli_query($con, "SELECT * FROM project");
+        if ($row_login = mysqli_fetch_array($result_login)) {
+            $login_project = $row_login['project_name'];
+        } else {
+            $login_project = "";
+        }
+        ?>
+        
+        <title><?php echo $login_project; ?> | niteD - Project Management System</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">

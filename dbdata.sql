@@ -1,3 +1,10 @@
+CREATE TABLE IF NOT EXISTS `project` (
+  `project_name` varchar(50) NOT NULL,
+  `project_email` varchar(30) NOT NULL,
+  `project_url` varchar(100) NOT NULL,
+  `project_description` text NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` varchar(30) NOT NULL,

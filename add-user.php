@@ -29,6 +29,23 @@ if ($_SESSION['usr_type']=="admin" || $_SESSION['usr_type']=="mod") {
         }
         if (!$error) {
             if(mysqli_query($con, "INSERT INTO users(name,email,password,account_type) VALUES('" . $name . "', '" . $email . "', '" . md5($password) . "', '" . $acc_type . "')")) {
+                $result_login = mysqli_query($con, "SELECT * FROM project");
+                if ($row_login = mysqli_fetch_array($result_login)) {
+                    $login_link = $row_login['project_url']."/login.php";
+                    $login_project = $row_login['project_name'];
+                } else {
+                    $login_link = "";
+                    $login_project = "";
+                }
+                include_once 'mail-template.php';
+                $fromEmail = "hello@jmroper.com";
+                $title = "Your Login Details";
+                $headers = "From: " . $fromEmail . "\r\n";
+                $headers .= "Reply-To: ". $fromEmail . "\r\n";
+                $headers .= "Return-Path: ". $fromEmail . "\r\n";
+                $headers .= "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
+                mail($email, $title, $userAddedEmail, $headers);
                 header("Location: tasks.php");
             } else {
                 $errormsg = '<h3 style="text-align: center;">Error in adding new user...Please try again later!</h3>';
