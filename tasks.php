@@ -30,7 +30,8 @@ while($row = mysqli_fetch_array($result)){ ?>
         <div class="card" >
             <img class="card-img-top img-fluid" width="100%" src="uploads/<?php echo $row['task_image']; ?>" onError="this.onerror=null;this.src='uploads/no-media.jpg';" alt="<?php echo $row['task_name']; ?>">
             <div class="card-block">
-                <h4 class="card-title"><?php echo $row['task_name']; ?></h4>
+                <h4 class="card-title"><?php echo $row['task_name']; ?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['task_state']; ?></span></h4>
+                <hr>
                 <p class="card-text"><?php echo $row['task_desc']; ?></p>
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskdeleteform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $row['task_id']; ?>">

@@ -14,6 +14,7 @@ $error = false;
 if (isset($_POST['taskcreate'])) {
 	$tname = mysqli_real_escape_string($con, $_POST['task-name']);
 	$tdesc = mysqli_real_escape_string($con, htmlspecialchars($_POST['task-desc']));
+    $tstate = mysqli_real_escape_string($con, $_POST['task_state']);
     if(isset($_FILES['task_image'])) {
         if($_FILES['task_image']['name'] == "") {
             $newtimage = "no-media.jpg";
@@ -56,7 +57,7 @@ if (isset($_POST['taskcreate'])) {
         }
     }
     
-    $sql = "INSERT INTO tasks (task_name, task_desc, task_image) VALUES ('".$tname."', '".$tdesc."', '".$newtimage."')";
+    $sql = "INSERT INTO tasks (task_name, task_desc, task_state, task_image) VALUES ('".$tname."', '".$tdesc."', '".$tstate."', '".$newtimage."')";
 
     if ($con->query($sql) === TRUE) {
         header("Location: tasks.php");
@@ -81,6 +82,17 @@ if (isset($_POST['taskcreate'])) {
                         </div>
                         <div class="form-group">
                             <input type="file" class="form-control" id="task_image" name="task_image">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="task_state" name="task_state">
+                                <option value="Final">Final</option>
+                                <option value="In Progress">In Progress</option>
+                                <option value="Missing File">Missing File</option>
+                                <option value="Not Active">Not Active</option>
+                                <option value="Not Assigned">Not Assigned</option>
+                                <option value="On Hold">On Hold</option>
+                                <option value="Redo">Redo</option>
+                            </select>
                         </div>
                         <button class="btn btn-primary btn-lg btn-block" type="submit" name="taskcreate">Add Task</button>
                     </form>

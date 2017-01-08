@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `task_id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `task_name` varchar(50) NOT NULL,
   `task_desc` text NOT NULL,
+  `task_state` varchar(20) NOT NULL,
   `task_image` text NOT NULL,
   UNIQUE KEY `task_id` (`task_id`)
 );
