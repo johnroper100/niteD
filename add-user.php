@@ -1,10 +1,10 @@
 <?php
 session_start();
-if(isset($_SESSION['usr_id'])=="") {
+if(isset($_SESSION['nited_usr_id'])=="") {
 	header("Location: login.php");
 }
 
-if ($_SESSION['usr_type']=="admin" || $_SESSION['usr_type']=="mod") {
+if ($_SESSION['nited_usr_type']=="admin" || $_SESSION['nited_usr_type']=="mod") {
     include_once 'dbconnect.php';
     include 'header.php';
 

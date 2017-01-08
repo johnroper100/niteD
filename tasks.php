@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['usr_id'])=="") {
+if(isset($_SESSION['nited_usr_id'])=="") {
 	header("Location: login.php");
 }
 
@@ -54,7 +54,7 @@ while($row = mysqli_fetch_array($result)){ ?>
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskdeleteform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $row['task_id']; ?>">
                     <a href="task-info.php?i=<?php echo $row['task_id']; ?>" class="btn btn-primary">View Task</a>
-                    <?php if ($_SESSION['usr_type']!="guest") { ?>
+                    <?php if ($_SESSION['nited_usr_type']!="guest") { ?>
                     <button class="btn btn-danger" type="submit" name="taskdelete">Close Task</button>
                     <?php } ?>
                 </form>

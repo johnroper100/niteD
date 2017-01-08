@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(isset($_SESSION['usr_id'])!="") {
+if(isset($_SESSION['nited_usr_id'])!="") {
 	header("Location: tasks.php");
 }
 
@@ -15,10 +15,10 @@ if (isset($_POST['login'])) {
     $result = mysqli_query($con, "SELECT * FROM users WHERE email = '" . $email. "' and password = '" . md5($password) . "'");
 
     if ($row = mysqli_fetch_array($result)) {
-        $_SESSION['usr_id'] = $row['id'];
-        $_SESSION['usr_name'] = $row['name'];
-        $_SESSION['usr_email'] = $row['email'];
-        $_SESSION['usr_type'] = $row['account_type'];
+        $_SESSION['nited_usr_id'] = $row['id'];
+        $_SESSION['nited_usr_name'] = $row['name'];
+        $_SESSION['nited_usr_email'] = $row['email'];
+        $_SESSION['nited_usr_type'] = $row['account_type'];
         header("Location: tasks.php");
     } else {
         $errormsg = '<h3 style="text-align: center;">Incorrect Email or Password!</h3>';

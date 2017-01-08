@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['usr_id'])=="") {
+if(isset($_SESSION['nited_usr_id'])=="") {
 	header("Location: login.php");
 }
 
@@ -25,7 +25,7 @@ if (isset($_POST['taskdelete'])) {
 
 if (isset($_POST['taskcomment'])) {
     $tid = mysqli_real_escape_string($con, $_POST['tid']);
-    $cname = $_SESSION['usr_name'];
+    $cname = $_SESSION['nited_usr_name'];
 	$cdesc = mysqli_real_escape_string($con, htmlspecialchars($_POST['comment_item']));
 
     $sql = "INSERT INTO comments (user_name, comment_text, task_id) VALUES ('".$cname."', '".$cdesc."', '".$tid."')";
@@ -130,7 +130,7 @@ if ($row = mysqli_fetch_array($result)) {
                              <b><?php echo $rownew['user_name']; ?></b>: <?php echo $rownew['comment_text']; ?>
                             <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
                             <input type="hidden" name="cid" id="cid" value="<?php echo $rownew['comment_id']; ?>">
-                            <?php if ($_SESSION['usr_type']!="guest") { ?>
+                            <?php if ($_SESSION['nited_usr_type']!="guest") { ?>
                             <button class="btn btn-warning btn-sm float-md-right" style="display: inline;" type="submit" name="commentdelete">Delete</button>
                             <?php } ?>
                         </form><hr>
@@ -138,7 +138,7 @@ if ($row = mysqli_fetch_array($result)) {
                 </p>
                 <form class="form-inline" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskcommentform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
-                    <?php if ($_SESSION['usr_type']!="guest") { ?>
+                    <?php if ($_SESSION['nited_usr_type']!="guest") { ?>
                     <input type="text" class="form-control col-2 col-sm-2 col-sm-0" style="width: 82%;" id="comment_item" name="comment_item">
                     <button class="btn btn-primary" type="submit" name="taskcomment">Comment</button>
                     <?php } ?>
@@ -154,7 +154,7 @@ if ($row = mysqli_fetch_array($result)) {
                 <p class="card-text"><?php echo $row['task_desc'];?></p>
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskdeleteform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
-                    <?php if ($_SESSION['usr_type']!="guest") { ?>
+                    <?php if ($_SESSION['nited_usr_type']!="guest") { ?>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskEditModal">
                         Edit Task
                     </button>

@@ -28,20 +28,20 @@
     <body>
         <nav class="navbar navbar-dark bg-inverse">
             <a href="tasks.php"><h1 class="navbar-brand mb-0" style="margin-left: 25px;"><?php echo $login_project_title; ?></h1></a>
-            <?php if (isset($_SESSION['usr_id'])) { ?>
+            <?php if (isset($_SESSION['nited_usr_id'])) { ?>
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="stats.php">Stats</a></li>
-                <?php if ($_SESSION['usr_type']!="guest" || $_SESSION['usr_type']!="rev") { ?>
+                <?php if ($_SESSION['nited_usr_type']!="guest" || $_SESSION['nited_usr_type']!="rev") { ?>
                 <li class="nav-item"><a class="nav-link" href="add-task.php">Add Task</a></li>
-                <?php } if ($_SESSION['usr_type']=="admin" || $_SESSION['usr_type']=="mod") { ?>
+                <?php } if ($_SESSION['nited_usr_type']=="admin" || $_SESSION['nited_usr_type']=="mod") { ?>
                     <li class="nav-item"><a class="nav-link" href="add-user.php">Add User</a></li>
                 <?php } ?>
                 <li class="nav-item dropdown float-md-right" style="margin-right: 25px;">
                     <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="fa fa-user fa-lg" style="font-size: 25px; margin-right: 5px;"></span> <?php echo $_SESSION['usr_name']; ?>
+                        <span class="fa fa-user fa-lg" style="font-size: 25px; margin-right: 5px;"></span> <?php echo $_SESSION['nited_usr_name']; ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <?php if ($_SESSION['usr_type']=="admin" || $_SESSION['usr_type']=="mod") { ?>
+                        <?php if ($_SESSION['nited_usr_type']=="admin" || $_SESSION['nited_usr_type']=="mod") { ?>
                             <a class="dropdown-item" href="users.php">Users</a>
                             <div class="dropdown-divider"></div>
                         <?php } ?>

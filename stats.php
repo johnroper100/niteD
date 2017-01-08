@@ -1,6 +1,6 @@
 <?php
 session_start();
-if(isset($_SESSION['usr_id'])=="") {
+if(isset($_SESSION['nited_usr_id'])=="") {
 	header("Location: login.php");
 }
 
