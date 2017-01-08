@@ -14,7 +14,8 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `task_name` varchar(50) NOT NULL,
   `task_desc` text NOT NULL,
   `task_state` varchar(20) NOT NULL,
-  `task_image` text NOT NULL,
+  `task_media_type` varchar(20) NOT NULL,
+  `task_media` text NOT NULL,
   UNIQUE KEY `task_id` (`task_id`)
 );
 

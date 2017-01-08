@@ -15,17 +15,18 @@ if (isset($_POST['taskcreate'])) {
 	$tname = mysqli_real_escape_string($con, $_POST['task-name']);
 	$tdesc = mysqli_real_escape_string($con, htmlspecialchars($_POST['task-desc']));
     $tstate = mysqli_real_escape_string($con, $_POST['task_state']);
-    if(isset($_FILES['task_image'])) {
-        if($_FILES['task_image']['name'] == "") {
+    $ttype = mysqli_real_escape_string($con, $_POST['task_media_type']);
+    if(isset($_FILES['task_media'])) {
+        if($_FILES['task_media']['name'] == "") {
             $newtimage = "no-media.jpg";
         } else {
-            $newtimage = $_FILES['task_image']['name'];
+            $newtimage = $_FILES['task_media']['name'];
             $target_dir = "uploads/";
-            $target_file = $target_dir . basename($_FILES["task_image"]["name"]);
+            $target_file = $target_dir . basename($_FILES["task_media"]["name"]);
             $uploadOk = 1;
             $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
             // Check if image file is a actual image or fake image
-            $checkTImage = getimagesize($_FILES["task_image"]["tmp_name"]);
+            $checkTImage = getimagesize($_FILES["task_media"]["tmp_name"]);
             if($checkTImage !== false) {
                 $uploadOk = 1;
             } else {
@@ -38,26 +39,26 @@ if (isset($_POST['taskcreate'])) {
                 $uploadOk = 0;
             }
             // Check file size
-            if ($_FILES["task_image"]["size"] > 5000000) {
+            if ($_FILES["task_media"]["size"] > 50000000) {
                 echo '<h3 style="text-align: center;">Sorry, your file is too large.</h3>';
                 $uploadOk = 0;
             }
             // Allow certain file formats
             if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "PNG" && $imageFileType != "JPG" && $imageFileType != "JPEG" && $imageFileType != "GIF" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" ) {
-                echo '<h3 style="text-align: center;">Sorry, only JPG, JPEG, PNG & GIF files are allowed.</h3>';
+            && $imageFileType != "gif" && $imageFileType != "mp4" && $imageFileType != "MP4") {
+                echo '<h3 style="text-align: center;">Sorry, only JPG, JPEG, PNG, GIF & MP4 files are allowed.</h3>';
                 $uploadOk = 0;
             }
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk != 0) {
-                if (!move_uploaded_file($_FILES["task_image"]["tmp_name"], $target_file)) {
+                if (!move_uploaded_file($_FILES["task_media"]["tmp_name"], $target_file)) {
                     echo '<h3 style="text-align: center;">Sorry, there was an error moving your file.</h3>';
                 }
             }
         }
     }
     
-    $sql = "INSERT INTO tasks (task_name, task_desc, task_state, task_image) VALUES ('".$tname."', '".$tdesc."', '".$tstate."', '".$newtimage."')";
+    $sql = "INSERT INTO tasks (task_name, task_desc, task_state, task_media_type, task_media) VALUES ('".$tname."', '".$tdesc."', '".$tstate."', '".$ttype."', '".$newtimage."')";
 
     if ($con->query($sql) === TRUE) {
         header("Location: tasks.php");
@@ -81,7 +82,13 @@ if (isset($_POST['taskcreate'])) {
                             <textarea class="form-control" id="task-desc" name="task-desc" required rows="3" placeholder="Task Description"></textarea>
                         </div>
                         <div class="form-group">
-                            <input type="file" class="form-control" id="task_image" name="task_image">
+                            <select class="form-control" id="task_media_type" name="task_media_type">
+                                <option value="img">Image</option>
+                                <option value="vid">Video</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="file" class="form-control" id="task_media" name="task_media">
                         </div>
                         <div class="form-group">
                             <select class="form-control" id="task_state" name="task_state">

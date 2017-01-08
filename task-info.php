@@ -59,49 +59,43 @@ if (isset($_POST['taskedit'])) {
 	$tname = mysqli_real_escape_string($con, $_POST['task-name']);
 	$tdesc = mysqli_real_escape_string($con, htmlspecialchars($_POST['task-desc']));
     $tstate = mysqli_real_escape_string($con, $_POST['task_state']);
-    if(isset($_FILES['task_image'])) {
-        if($_FILES['task_image']['name'] == "") {
+    $ttype = mysqli_real_escape_string($con, $_POST['task_media_type']);
+    if(isset($_FILES['task_media'])) {
+        if($_FILES['task_media']['name'] == "") {
             $newtimage = $timg;
         } else {
-            $newtimage = $_FILES['task_image']['name'];
+            $newtimage = $_FILES['task_media']['name'];
             $target_dir = "uploads/";
-            $target_file = $target_dir . basename($_FILES["task_image"]["name"]);
+            $target_file = $target_dir . basename($_FILES["task_media"]["name"]);
             $uploadOk = 1;
             $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
             // Check if image file is a actual image or fake image
-            $checkTImage = getimagesize($_FILES["task_image"]["tmp_name"]);
-            if($checkTImage !== false) {
-                $uploadOk = 1;
-            } else {
-                echo '<h3 style="text-align: center;">File is not an image.</h3>';
-                $uploadOk = 0;
-            }
             // Check if file already exists
             if (file_exists($target_file)) {
                 echo '<h3 style="text-align: center;">Sorry, file already exists.</h3>';
                 $uploadOk = 0;
             }
             // Check file size
-            if ($_FILES["task_image"]["size"] > 5000000) {
+            if ($_FILES["task_media"]["size"] > 50000000) {
                 echo '<h3 style="text-align: center;">Sorry, your file is too large.</h3>';
                 $uploadOk = 0;
             }
             // Allow certain file formats
             if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "PNG" && $imageFileType != "JPG" && $imageFileType != "JPEG" && $imageFileType != "GIF" && $imageFileType != "jpeg"
-            && $imageFileType != "gif" ) {
-                echo '<h3 style="text-align: center;">Sorry, only JPG, JPEG, PNG & GIF files are allowed.</h3>';
+            && $imageFileType != "gif" && $imageFileType != "mp4" && $imageFileType != "MP4") {
+                echo '<h3 style="text-align: center;">Sorry, only JPG, JPEG, PNG, GIF & MP4 files are allowed.</h3>';
                 $uploadOk = 0;
             }
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk != 0) {
-                if (!move_uploaded_file($_FILES["task_image"]["tmp_name"], $target_file)) {
+                if (!move_uploaded_file($_FILES["task_media"]["tmp_name"], $target_file)) {
                     echo '<h3 style="text-align: center;">Sorry, there was an error moving your file.</h3>';
                 }
             }
         }
     }
     
-    $sql = "UPDATE tasks SET task_name='".$tname."', task_desc='".$tdesc."', task_state='".$tstate."', task_image='".$newtimage."' WHERE task_id='".$tid."'";
+    $sql = "UPDATE tasks SET task_name='".$tname."', task_desc='".$tdesc."', task_state='".$tstate."', task_media_type='".$ttype."', task_media='".$newtimage."' WHERE task_id='".$tid."'";
 
     if ($con->query($sql) === TRUE) {
         header("Location: task-info.php?i=".$tid);
@@ -117,7 +111,13 @@ if ($row = mysqli_fetch_array($result)) {
 <div class="row">
     <div class="col-md-7">
         <div class="card">
-            <img class="card-img-top img-fluid" width="100%" src="uploads/<?php echo $row['task_image'];?>" alt="<?php echo $row['task_name'];?>">
+            <?php if ($row['task_media_type']=="img") { ?>
+            <img class="card-img-top img-fluid" width="100%" src="uploads/<?php echo $row['task_media'];?>" onError="this.onerror=null;this.src='uploads/no-media.jpg';" alt="<?php echo $row['task_name'];?>">
+            <?php } if ($row['task_media_type']=="vid") { ?>
+            <video controls class="card-img-top img-fluid" width="100%">
+                <source src="uploads/<?php echo $row['task_media'];?>" type="video/mp4">
+            </video>
+            <?php } ?>
             <div class="card-block">
                 <h4 class="card-title">Comments:</h4>
                 <hr>
@@ -183,7 +183,13 @@ if ($row = mysqli_fetch_array($result)) {
                         <textarea class="form-control" id="task-desc" name="task-desc" required rows="3" placeholder="Task Description"><?php echo $row['task_desc'];?></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="file" class="form-control" id="task_image" name="task_image">
+                        <select class="form-control" id="task_media_type" name="task_media_type">
+                            <option value="img">Image</option>
+                            <option value="vid">Video</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-control" id="task_media" name="task_media">
                     </div>
                     <div class="form-group">
                         <select class="form-control" id="task_state" name="task_state">
@@ -197,7 +203,7 @@ if ($row = mysqli_fetch_array($result)) {
                         </select>
                     </div>
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
-                    <input type="hidden" name="timg" id="timg" value="<?php echo $row['task_image'];?>">
+                    <input type="hidden" name="timg" id="timg" value="<?php echo $row['task_media'];?>">
                     <button class="btn btn-primary btn-lg btn-block" type="submit" name="taskedit">Update Task</button>
                 </form>
             </div>
