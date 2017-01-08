@@ -95,3 +95,25 @@ a.badge:focus, a.badge:hover {
 .badge-danger[href]:focus, .badge-danger[href]:hover {
   background-color: #c9302c;
 }
+
+.close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .5;
+}
+
+.close:focus, .close:hover {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  opacity: .75;
+}
+
+.modal-title {
+  margin-bottom: 0;
+  line-height: 1.5;
+}

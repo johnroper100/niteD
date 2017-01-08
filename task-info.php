@@ -52,6 +52,65 @@ if (isset($_POST['commentdelete'])) {
     }
 }
 
+//check if form is submitted
+if (isset($_POST['taskedit'])) {
+    $tid = mysqli_real_escape_string($con, $_POST['tid']);
+    $timg = mysqli_real_escape_string($con, $_POST['timg']);
+	$tname = mysqli_real_escape_string($con, $_POST['task-name']);
+	$tdesc = mysqli_real_escape_string($con, htmlspecialchars($_POST['task-desc']));
+    $tstate = mysqli_real_escape_string($con, $_POST['task_state']);
+    if(isset($_FILES['task_image'])) {
+        if($_FILES['task_image']['name'] == "") {
+            $newtimage = $timg;
+        } else {
+            $newtimage = $_FILES['task_image']['name'];
+            $target_dir = "uploads/";
+            $target_file = $target_dir . basename($_FILES["task_image"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+            // Check if image file is a actual image or fake image
+            $checkTImage = getimagesize($_FILES["task_image"]["tmp_name"]);
+            if($checkTImage !== false) {
+                $uploadOk = 1;
+            } else {
+                echo '<h3 style="text-align: center;">File is not an image.</h3>';
+                $uploadOk = 0;
+            }
+            // Check if file already exists
+            if (file_exists($target_file)) {
+                echo '<h3 style="text-align: center;">Sorry, file already exists.</h3>';
+                $uploadOk = 0;
+            }
+            // Check file size
+            if ($_FILES["task_image"]["size"] > 5000000) {
+                echo '<h3 style="text-align: center;">Sorry, your file is too large.</h3>';
+                $uploadOk = 0;
+            }
+            // Allow certain file formats
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "PNG" && $imageFileType != "JPG" && $imageFileType != "JPEG" && $imageFileType != "GIF" && $imageFileType != "jpeg"
+            && $imageFileType != "gif" ) {
+                echo '<h3 style="text-align: center;">Sorry, only JPG, JPEG, PNG & GIF files are allowed.</h3>';
+                $uploadOk = 0;
+            }
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk != 0) {
+                if (!move_uploaded_file($_FILES["task_image"]["tmp_name"], $target_file)) {
+                    echo '<h3 style="text-align: center;">Sorry, there was an error moving your file.</h3>';
+                }
+            }
+        }
+    }
+    
+    $sql = "UPDATE tasks SET task_name='".$tname."', task_desc='".$tdesc."', task_state='".$tstate."', task_image='".$newtimage."' WHERE task_id='".$tid."'";
+
+    if ($con->query($sql) === TRUE) {
+        header("Location: task-info.php?i=".$tid);
+    } else {
+        echo '<h3 style="text-align: center;">The task could not be edited!</h3>';
+        echo '<span style="text-align: center;">Error: ' . $sql . '<br>' . $con->error . '</span>';
+    }
+}
+
 $result = mysqli_query($con, "SELECT * FROM tasks WHERE task_id = '" . $taskID. "'");
 if ($row = mysqli_fetch_array($result)) {
 ?>
@@ -96,8 +155,50 @@ if ($row = mysqli_fetch_array($result)) {
                 <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskdeleteform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
                     <?php if ($_SESSION['usr_type']!="guest") { ?>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskEditModal">
+                        Edit Task
+                    </button>
                     <button class="btn btn-danger" type="submit" name="taskdelete">Close Task</button>
                     <?php } ?>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="taskEditModal" tabindex="-1" role="dialog" aria-labelledby="taskEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h5 class="modal-title" id="exampleModalLabel">Edit Task</h5>
+            </div>
+            <div class="modal-body">
+                <form enctype="multipart/form-data" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskeditform" >
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Task Name" value="<?php echo $row['task_name'];?>" id="task-name" name="task-name" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="task-desc" name="task-desc" required rows="3" placeholder="Task Description"><?php echo $row['task_desc'];?></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="file" class="form-control" id="task_image" name="task_image">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" id="task_state" name="task_state">
+                            <option value="Final">Final</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Missing File">Missing File</option>
+                            <option value="Not Active">Not Active</option>
+                            <option value="Not Assigned">Not Assigned</option>
+                            <option value="On Hold">On Hold</option>
+                            <option value="Redo">Redo</option>
+                        </select>
+                    </div>
+                    <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
+                    <input type="hidden" name="timg" id="timg" value="<?php echo $row['task_image'];?>">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" name="taskedit">Update Task</button>
                 </form>
             </div>
         </div>
