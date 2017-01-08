@@ -11,8 +11,9 @@ if (isset($_POST['taskdelete'])) {
     $tid = mysqli_real_escape_string($con, $_POST['tid']);
 
     $sql = "DELETE FROM tasks WHERE task_id=".$tid;
+    $sql2 = "DELETE FROM comments WHERE task_id=".$tid;
 
-    if ($con->query($sql) === TRUE) {
+    if ($con->query($sql) === TRUE && $con->query($sql2) === TRUE) {
         header("Location: tasks.php");
     } else {
         echo '<h3 style="text-align: center;">The task could not be deleted!</h3>';

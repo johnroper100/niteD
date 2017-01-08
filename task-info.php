@@ -13,8 +13,9 @@ if (isset($_POST['taskdelete'])) {
     $tid = mysqli_real_escape_string($con, $_POST['tid']);
 
     $sql = "DELETE FROM tasks WHERE task_id=".$tid;
+    $sql2 = "DELETE FROM comments WHERE task_id=".$tid;
 
-    if ($con->query($sql) === TRUE) {
+    if ($con->query($sql) === TRUE && $con->query($sql2) === TRUE) {
         header("Location: tasks.php");
     } else {
         echo '<h3 style="text-align: center;">The task could not be deleted!</h3>';
@@ -71,7 +72,7 @@ if ($row = mysqli_fetch_array($result)) {
                             <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
                             <input type="hidden" name="cid" id="cid" value="<?php echo $rownew['comment_id']; ?>">
                             <?php if ($_SESSION['usr_type']!="guest") { ?>
-                            <button class="btn btn-danger btn-sm float-md-right" style="display: inline;" type="submit" name="commentdelete">Delete</button>
+                            <button class="btn btn-warning btn-sm float-md-right" style="display: inline;" type="submit" name="commentdelete">Delete</button>
                             <?php } ?>
                         </form><hr>
                 <?php } ?>
