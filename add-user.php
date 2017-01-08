@@ -55,10 +55,11 @@ if ($_SESSION['usr_type']=="admin" || $_SESSION['usr_type']=="mod") {
                         </div>
                         <div class="form-group">
                             <select class="form-control" id="signup-account-type" name="signup-account-type">
-                              <option value="admin">Administrator</option>
-                              <option value="mod">Moderator</option>
-                              <option value="user">User</option>
-                              <option value="guest">Guest</option>
+                                <option value="admin">Administrator</option>
+                                <option value="mod">Moderator</option>
+                                <option value="user">User</option>
+                                <option value="rev">Reviewer</option>
+                                <option value="guest">Guest</option>
                             </select>
                         </div>
                         <button class="btn btn-primary btn-lg btn-block" type="submit" name="signup">Add User</button>

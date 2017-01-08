@@ -18,7 +18,7 @@
             <a href="tasks.php"><h1 class="navbar-brand mb-0" style="margin-left: 25px;">niteD</h1></a>
             <?php if (isset($_SESSION['usr_id'])) { ?>
             <ul class="navbar-nav">
-                <?php if ($_SESSION['usr_type']!="guest") { ?>
+                <?php if ($_SESSION['usr_type']!="guest" || $_SESSION['usr_type']!="rev") { ?>
                 <li class="nav-item"><a class="nav-link" href="add-task.php">Add Task</a></li>
                 <?php } if ($_SESSION['usr_type']=="admin" || $_SESSION['usr_type']=="mod") { ?>
                     <li class="nav-item"><a class="nav-link" href="add-user.php">Add User</a></li>
