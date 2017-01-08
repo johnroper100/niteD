@@ -16,3 +16,11 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `task_image` text NOT NULL,
   UNIQUE KEY `task_id` (`task_id`)
 );
+
+CREATE TABLE IF NOT EXISTS `comments` (
+  `comment_id` int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `user_name` varchar(50) NOT NULL,
+  `comment_text` text NOT NULL,
+  `task_id` int NOT NULL,
+  UNIQUE KEY `comment_id` (`comment_id`)
+);

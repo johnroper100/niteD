@@ -9,3 +9,7 @@ body {
 .container {
     margin-top: 15px;
 }
+
+.card-img-top {
+    background-color: #bdc3c7;
+}
