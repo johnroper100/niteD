@@ -28,6 +28,10 @@
                         <span class="fa fa-user fa-lg" style="font-size: 25px; margin-right: 5px;"></span> <?php echo $_SESSION['usr_name']; ?>
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <?php if ($_SESSION['usr_type']=="admin" || $_SESSION['usr_type']=="mod") { ?>
+                            <a class="dropdown-item" href="users.php">Users</a>
+                            <div class="dropdown-divider"></div>
+                        <?php } ?>
                         <a class="dropdown-item" href="logout.php">Logout</a>
                     </div>
                 </li>
