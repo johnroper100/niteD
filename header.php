@@ -10,13 +10,15 @@
         include_once 'dbconnect.php';
         $result_login = mysqli_query($con, "SELECT * FROM project");
         if ($row_login = mysqli_fetch_array($result_login)) {
-            $login_project = $row_login['project_name'];
+            $login_project = $row_login['project_name']." |";
+            $login_project_title = $row_login['project_name'];
         } else {
             $login_project = "";
+            $login_project_title = "niteD";
         }
         ?>
         
-        <title><?php echo $login_project; ?> | niteD - Project Management System</title>
+        <title><?php echo $login_project; ?> niteD - Project Management System</title>
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -25,7 +27,7 @@
     </head>
     <body>
         <nav class="navbar navbar-dark bg-inverse">
-            <a href="tasks.php"><h1 class="navbar-brand mb-0" style="margin-left: 25px;">niteD</h1></a>
+            <a href="tasks.php"><h1 class="navbar-brand mb-0" style="margin-left: 25px;"><?php echo $login_project_title; ?></h1></a>
             <?php if (isset($_SESSION['usr_id'])) { ?>
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="stats.php">Stats</a></li>
