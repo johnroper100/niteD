@@ -69,7 +69,6 @@ if (isset($_POST['taskedit'])) {
             $target_file = $target_dir . basename($_FILES["task_media"]["name"]);
             $uploadOk = 1;
             $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-            // Check if image file is a actual image or fake image
             // Check if file already exists
             if (file_exists($target_file)) {
                 echo '<h3 style="text-align: center;">Sorry, file already exists.</h3>';

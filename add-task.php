@@ -25,14 +25,6 @@ if (isset($_POST['taskcreate'])) {
             $target_file = $target_dir . basename($_FILES["task_media"]["name"]);
             $uploadOk = 1;
             $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-            // Check if image file is a actual image or fake image
-            $checkTImage = getimagesize($_FILES["task_media"]["tmp_name"]);
-            if($checkTImage !== false) {
-                $uploadOk = 1;
-            } else {
-                echo '<h3 style="text-align: center;">File is not an image.</h3>';
-                $uploadOk = 0;
-            }
             // Check if file already exists
             if (file_exists($target_file)) {
                 echo '<h3 style="text-align: center;">Sorry, file already exists.</h3>';
