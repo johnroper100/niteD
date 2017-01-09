@@ -46,7 +46,7 @@ if ($_SESSION['nited_usr_type']=="admin" || $_SESSION['nited_usr_type']=="mod") 
                 $headers .= "MIME-Version: 1.0\r\n";
                 $headers .= "Content-type: text/html; charset=iso-8859-1\r\n";
                 mail($email, $title, $userAddedEmail, $headers);
-                header("Location: tasks.php");
+                header("Location: users.php");
             } else {
                 $errormsg = '<h3 style="text-align: center;">Error in adding new user...Please try again later!</h3>';
             }
