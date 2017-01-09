@@ -12,13 +12,27 @@
         if ($row_login = mysqli_fetch_array($result_login)) {
             $login_project = $row_login['project_name']." |";
             $login_project_title = $row_login['project_name'];
+            $login_project_desc = $row_login['project_description'];
         } else {
             $login_project = "";
             $login_project_title = "niteD";
+            $login_project_desc = "";
         }
         ?>
         
         <title><?php echo $login_project; ?> niteD - Project Management System</title>
+        
+        <!-- Facebook Stuff --> 
+        <meta property="og:title" content="<?php echo $login_project; ?> niteD - Project Management System"> 
+        <meta property="og:type" content="website"> 
+        <meta property="og:url" content="http://jmroper.com/">
+        <meta property="og:description" content="<?php echo $login_project_desc; ?>">
+        <!-- Twitter Stuff --> 
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@johnroper100">
+        <meta name="twitter:creator" content="@johnroper100">
+        <meta name="twitter:title" content="<?php echo $login_project; ?> niteD - Project Management System">
+        <meta name="twitter:description" content="<?php echo $login_project_desc; ?>">
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="css/bootstrap.min.css">
