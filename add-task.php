@@ -49,7 +49,9 @@ if (isset($_POST['taskcreate'])) {
             }
         }
     }
+    
     $sql = "INSERT INTO tasks (task_name, task_desc, task_state, task_media_type, task_media) VALUES ('".$tname."', '".$tdesc."', '".$tstate."', '".$ttype."', '".$newtimage."')";
+
     if ($con->query($sql) === TRUE) {
         header("Location: tasks.php");
     } else {
