@@ -60,7 +60,7 @@ if ($_SESSION['nited_usr_type']=="admin" || $_SESSION['nited_usr_type']=="mod") 
             <div class="card-block">
                 <h4 class="card-title">Add User</h4>
                 <div class="card-text">
-                    <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="signupform">
+                    <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="signupform">
                         <div class="form-group">
                             <input type="text" class="form-control" value="<?php if($error) echo $name; ?>" placeholder="Full Name" id="signup-name" name="signup-name" required>
                         </div>

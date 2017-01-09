@@ -49,9 +49,7 @@ if (isset($_POST['taskcreate'])) {
             }
         }
     }
-    
     $sql = "INSERT INTO tasks (task_name, task_desc, task_state, task_media_type, task_media) VALUES ('".$tname."', '".$tdesc."', '".$tstate."', '".$ttype."', '".$newtimage."')";
-
     if ($con->query($sql) === TRUE) {
         header("Location: tasks.php");
     } else {
@@ -66,7 +64,7 @@ if (isset($_POST['taskcreate'])) {
             <div class="card-block">
                 <h4 class="card-title">Add Task</h4>
                 <div class="card-text">
-                    <form enctype="multipart/form-data" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskcreateform" >
+                    <form enctype="multipart/form-data" role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="taskcreateform" >
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Task Name" id="task-name" name="task-name" required>
                         </div>

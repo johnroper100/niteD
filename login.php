@@ -32,7 +32,7 @@ if (isset($_POST['login'])) {
             <div class="card-block">
                 <h4 class="card-title">Login</h4>
                 <div class="card-text">
-                    <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="loginform">
+                    <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="loginform">
                         <div class="form-group">
                             <input type="email" class="form-control" value="<?= $_GET['e'] ?>" placeholder="Email" id="login-email" name="login-email" required>
                         </div>

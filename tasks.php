@@ -51,7 +51,7 @@ while($row = mysqli_fetch_array($result)){ ?>
                 <h4 class="card-title"><?php echo $row['task_name']; ?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['task_state']; ?></span></h4>
                 <hr>
                 <p class="card-text"><?php echo truncate($row['task_desc']); ?></p>
-                <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskdeleteform">
+                <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="taskdeleteform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $row['task_id']; ?>">
                     <a href="task-info.php?i=<?php echo $row['task_id']; ?>" class="btn btn-primary">View Task</a>
                     <?php if ($_SESSION['nited_usr_type']!="guest") { ?>

@@ -81,7 +81,7 @@ if ($row = mysqli_fetch_array($result)) {
                 <h4 class="card-title"><?php echo $row['name']; ?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['account_type']; ?></span></h4>
                 <a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a>
                 <hr>
-                <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="userdeleteform">
+                <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="userdeleteform">
                     <input type="hidden" name="uid" id="uid" value="<?php echo $userID;?>">
                     <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#userEditModal">
                         Edit User
@@ -102,7 +102,7 @@ if ($row = mysqli_fetch_array($result)) {
                 <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
             </div>
             <div class="modal-body">
-                <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="usereditform">
+                <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="usereditform">
                     <div class="form-group">
                         <input type="text" class="form-control" value="<?php echo $row['name']; ?>" placeholder="Full Name" id="signup-name" name="signup-name" required>
                     </div>

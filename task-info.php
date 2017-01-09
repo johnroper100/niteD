@@ -125,7 +125,7 @@ if ($row = mysqli_fetch_array($result)) {
                     $newresult = mysqli_query($con, "SELECT * FROM comments WHERE task_id = '" . $taskID. "'");
                     while($rownew = mysqli_fetch_array($newresult)){ ?>
                         
-                         <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="commentdeleteform">
+                         <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="commentdeleteform">
                              <b><?php echo $rownew['user_name']; ?></b>: <?php echo $rownew['comment_text']; ?>
                             <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
                             <input type="hidden" name="cid" id="cid" value="<?php echo $rownew['comment_id']; ?>">
@@ -135,7 +135,7 @@ if ($row = mysqli_fetch_array($result)) {
                         </form><hr>
                 <?php } ?>
                 </p>
-                <form class="form-inline" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskcommentform">
+                <form class="form-inline" role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="taskcommentform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
                     <?php if ($_SESSION['nited_usr_type']!="guest") { ?>
                     <input type="text" class="form-control col-2 col-sm-2 col-sm-0" style="width: 82%;" id="comment_item" name="comment_item">
@@ -151,7 +151,7 @@ if ($row = mysqli_fetch_array($result)) {
                 <h4 class="card-title"><?php echo $row['task_name'];?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['task_state']; ?></span></h4>
                 <hr>
                 <p class="card-text"><?php echo $row['task_desc'];?></p>
-                <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskdeleteform">
+                <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="taskdeleteform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
                     <?php if ($_SESSION['nited_usr_type']!="guest") { ?>
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskEditModal">
@@ -174,7 +174,7 @@ if ($row = mysqli_fetch_array($result)) {
                 <h5 class="modal-title" id="exampleModalLabel">Edit Task</h5>
             </div>
             <div class="modal-body">
-                <form enctype="multipart/form-data" role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="taskeditform" >
+                <form enctype="multipart/form-data" role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="taskeditform" >
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Task Name" value="<?php echo $row['task_name'];?>" id="task-name" name="task-name" required>
                     </div>

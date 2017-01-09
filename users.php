@@ -43,7 +43,7 @@ while($row = mysqli_fetch_array($result)){
                 <h4 class="card-title"><?php echo $row['name']; ?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['account_type']; ?></span></h4>
                 <p><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></p>
                 <hr>
-                <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="userdeleteform">
+                <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="userdeleteform">
                     <a href="user-info.php?i=<?php echo $row['id']; ?>" class="btn btn-primary" style="margin-bottom: 5px;">View User</a>
                     <input type="hidden" name="uid" id="uid" value="<?php echo $row['id']; ?>">
                     <button class="btn btn-danger" type="submit" name="userdelete">Delete User</button>

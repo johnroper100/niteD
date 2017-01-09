@@ -33,7 +33,7 @@ if (isset($_POST['projectcreate'])) {
             <div class="card-block">
                 <h4 class="card-title">Install niteD</h4>
                 <p class="card-text">To install niteD you first have to input some info about your project.<br>Once you get to the login page, use this info:<br><br><b>Email:</b> admin@admin.com<br><b>Password:</b> password<br><br>Then you can add yourself as a user and/or change the password.<br><b>You must remember to delete <i>install.php</i> so that nobody can access your website!</b></p>
-                <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="projectcreateform" >
+                <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="projectcreateform" >
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Project Name" id="project-name" name="project-name" required>
                     </div>

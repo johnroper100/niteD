@@ -75,7 +75,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">Edit Password</h5>
                     </div>
                     <div class="modal-body">
-                        <form role="form" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="passeditform">
+                        <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="passeditform">
                             <div class="form-group">
                                 <input type="password" class="form-control" placeholder="Password" id="upass" name="upass">
                             </div>
