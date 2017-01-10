@@ -129,7 +129,7 @@ if ($row = mysqli_fetch_array($result)) {
                              <b><?php echo $rownew['user_name']; ?></b>: <?php echo $rownew['comment_text']; ?>
                             <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
                             <input type="hidden" name="cid" id="cid" value="<?php echo $rownew['comment_id']; ?>">
-                            <?php if ($_SESSION['nited_usr_type']!="guest") { ?>
+                            <?php if ($_SESSION['nited_usr_type']!="guest" && $_SESSION['nited_usr_name']==$rownew['user_name']) { ?>
                             <button class="btn btn-warning btn-sm float-md-right" style="display: inline;" type="submit" name="commentdelete">Delete</button>
                             <?php } ?>
                         </form><hr>
