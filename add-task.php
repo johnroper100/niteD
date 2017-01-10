@@ -16,6 +16,7 @@ if (isset($_POST['taskcreate'])) {
 	$tdesc = mysqli_real_escape_string($con, htmlspecialchars($_POST['task-desc']));
     $tstate = mysqli_real_escape_string($con, $_POST['task_state']);
     $ttype = mysqli_real_escape_string($con, $_POST['task_media_type']);
+    $tass = mysqli_real_escape_string($con, $_POST['task_assigned']);
     if(isset($_FILES['task_media'])) {
         if($_FILES['task_media']['name'] == "") {
             $newtimage = "no-media.jpg";
@@ -50,7 +51,7 @@ if (isset($_POST['taskcreate'])) {
         }
     }
     
-    $sql = "INSERT INTO tasks (task_name, task_desc, task_state, task_media_type, task_media) VALUES ('".$tname."', '".$tdesc."', '".$tstate."', '".$ttype."', '".$newtimage."')";
+    $sql = "INSERT INTO tasks (task_name, task_desc, task_state, task_media_type, task_media, task_assigned) VALUES ('".$tname."', '".$tdesc."', '".$tstate."', '".$ttype."', '".$newtimage."', '".$tass."')";
 
     if ($con->query($sql) === TRUE) {
         header("Location: tasks.php");
@@ -74,15 +75,18 @@ if (isset($_POST['taskcreate'])) {
                             <textarea class="form-control" id="task-desc" name="task-desc" required rows="3" placeholder="Task Description"></textarea>
                         </div>
                         <div class="form-group">
+                            <label>File Type:</label>
                             <select class="form-control" id="task_media_type" name="task_media_type">
                                 <option value="img">Image</option>
                                 <option value="vid">Video</option>
                             </select>
                         </div>
                         <div class="form-group">
+                            <label>File:</label>
                             <input type="file" class="form-control" id="task_media" name="task_media">
                         </div>
                         <div class="form-group">
+                            <label>Task State:</label>
                             <select class="form-control" id="task_state" name="task_state">
                                 <option value="Final">Final</option>
                                 <option value="In Progress">In Progress</option>
@@ -91,6 +95,17 @@ if (isset($_POST['taskcreate'])) {
                                 <option value="Not Assigned">Not Assigned</option>
                                 <option value="On Hold">On Hold</option>
                                 <option value="Redo">Redo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Assigned To:</label>
+                            <select class="form-control" id="task_assigned" name="task_assigned">
+                                <option value="None">None</option>
+                                <?php
+                                $result_users = mysqli_query($con, "SELECT * FROM users");
+                                while($row_users = mysqli_fetch_array($result_users)){ ?>
+                                    <option value="<?php echo $row_users['name']; ?>"><?php echo $row_users['name']; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                         <button class="btn btn-primary btn-lg btn-block" type="submit" name="taskcreate">Add Task</button>

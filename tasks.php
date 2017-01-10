@@ -49,6 +49,9 @@ while($row = mysqli_fetch_array($result)){ ?>
             <?php } ?>
             <div class="card-block">
                 <h4 class="card-title"><?php echo $row['task_name']; ?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['task_state']; ?></span></h4>
+                <?php if($row['task_assigned']!="None") { ?>
+                <p>Assigned to: <?php echo $row['task_assigned']; ?></p>
+                <?php } ?>
                 <hr>
                 <p class="card-text"><?php echo truncate($row['task_desc']); ?></p>
                 <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="taskdeleteform">

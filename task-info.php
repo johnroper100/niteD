@@ -60,6 +60,7 @@ if (isset($_POST['taskedit'])) {
 	$tdesc = mysqli_real_escape_string($con, htmlspecialchars($_POST['task-desc']));
     $tstate = mysqli_real_escape_string($con, $_POST['task_state']);
     $ttype = mysqli_real_escape_string($con, $_POST['task_media_type']);
+    $tass = mysqli_real_escape_string($con, $_POST['task_assigned']);
     if(isset($_FILES['task_media'])) {
         if($_FILES['task_media']['name'] == "") {
             $newtimage = $timg;
@@ -94,7 +95,7 @@ if (isset($_POST['taskedit'])) {
         }
     }
     
-    $sql = "UPDATE tasks SET task_name='".$tname."', task_desc='".$tdesc."', task_state='".$tstate."', task_media_type='".$ttype."', task_media='".$newtimage."' WHERE task_id='".$tid."'";
+    $sql = "UPDATE tasks SET task_name='".$tname."', task_desc='".$tdesc."', task_state='".$tstate."', task_media_type='".$ttype."', task_media='".$newtimage."', task_assigned='".$tass."' WHERE task_id='".$tid."'";
 
     if ($con->query($sql) === TRUE) {
         header("Location: task-info.php?i=".$tid);
@@ -149,6 +150,9 @@ if ($row = mysqli_fetch_array($result)) {
         <div class="card">
             <div class="card-block">
                 <h4 class="card-title"><?php echo $row['task_name'];?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['task_state']; ?></span></h4>
+                <?php if($row['task_assigned']!="None") { ?>
+                <p>Assigned to: <?php echo $row['task_assigned']; ?></p>
+                <?php } ?>
                 <hr>
                 <p class="card-text"><?php echo $row['task_desc'];?></p>
                 <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="taskdeleteform">
@@ -182,23 +186,37 @@ if ($row = mysqli_fetch_array($result)) {
                         <textarea class="form-control" id="task-desc" name="task-desc" required rows="3" placeholder="Task Description"><?php echo $row['task_desc'];?></textarea>
                     </div>
                     <div class="form-group">
+                        <label>File Type:</label>
                         <select class="form-control" id="task_media_type" name="task_media_type">
-                            <option value="img">Image</option>
-                            <option value="vid">Video</option>
+                            <option value="img" <?=$row['task_media_type'] == 'img' ? 'selected="selected"' : '';?>>Image</option>
+                            <option value="vid" <?=$row['task_media_type'] == 'vid' ? 'selected="selected"' : '';?>>Video</option>
                         </select>
                     </div>
                     <div class="form-group">
+                        <label>File:</label>
                         <input type="file" class="form-control" id="task_media" name="task_media">
                     </div>
                     <div class="form-group">
+                        <label>Task State:</label>
                         <select class="form-control" id="task_state" name="task_state">
-                            <option value="Final">Final</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Missing File">Missing File</option>
-                            <option value="Not Active">Not Active</option>
-                            <option value="Not Assigned">Not Assigned</option>
-                            <option value="On Hold">On Hold</option>
-                            <option value="Redo">Redo</option>
+                            <option value="Final" <?=$row['task_state'] == 'Final' ? 'selected="selected"' : '';?>>Final</option>
+                            <option value="In Progress" <?=$row['task_state'] == 'In Progress' ? 'selected="selected"' : '';?>>In Progress</option>
+                            <option value="Missing File" <?=$row['task_state'] == 'Missing File' ? 'selected="selected"' : '';?>>Missing File</option>
+                            <option value="Not Active" <?=$row['task_state'] == 'Not Active' ? 'selected="selected"' : '';?>>Not Active</option>
+                            <option value="Not Assigned" <?=$row['task_state'] == 'Not Assigned' ? 'selected="selected"' : '';?>>Not Assigned</option>
+                            <option value="On Hold" <?=$row['task_state'] == 'On Hold' ? 'selected="selected"' : '';?>>On Hold</option>
+                            <option value="Redo" <?=$row['task_state'] == 'Redo' ? 'selected="selected"' : '';?>>Redo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Assigned To:</label>
+                        <select class="form-control" id="task_assigned" name="task_assigned">
+                            <option value="None" <?=$row['task_assigned'] == 'None' ? 'selected="selected"' : '';?>>None</option>
+                            <?php
+                            $result_users = mysqli_query($con, "SELECT * FROM users");
+                            while($row_users = mysqli_fetch_array($result_users)){ ?>
+                                <option value="<?php echo $row_users['name']; ?>" <?=$row['task_assigned'] == $row_users['name'] ? 'selected="selected"' : '';?>><?php echo $row_users['name']; ?></option>
+                            <?php } ?>
                         </select>
                     </div>
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
