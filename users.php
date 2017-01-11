@@ -40,7 +40,7 @@ while($row = mysqli_fetch_array($result)){
         <div class="card">
             <img class="card-img-top img-fluid" width="100%" src="<?php echo $path?>/?d=mm&s=2048" alt="<?php echo $row['name']; ?>">
             <div class="card-block">
-                <h4 class="card-title"><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['account_type']; ?></span><?php echo $row['name']; ?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['account_type']; ?></span></h4>
+                <h4 class="card-title"><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['account_type']; ?></span><?php echo $row['name']; ?></h4>
                 <p><a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></p>
                 <hr>
                 <form role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="userdeleteform">
