@@ -48,7 +48,7 @@ while($row = mysqli_fetch_array($result)){ ?>
             </video>
             <?php } ?>
             <div class="card-block">
-                <h4 class="card-title"><?php echo $row['task_name']; ?><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['task_state']; ?></span></h4>
+                <h4 class="card-title"><span class="badge badge-default float-xs-right" style="font-size: 15px; margin-top: 5px;"><?php echo $row['task_state']; ?></span><?php echo $row['task_name']; ?></h4>
                 <?php if($row['task_assigned']!="None") { ?>
                 <p>Assigned to: <?php echo $row['task_assigned']; ?></p>
                 <?php } ?>
