@@ -139,7 +139,7 @@ if ($row = mysqli_fetch_array($result)) {
                 <form class="form-inline" role="form" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="post" name="taskcommentform">
                     <input type="hidden" name="tid" id="tid" value="<?php echo $taskID;?>">
                     <?php if ($_SESSION['nited_usr_type']!="guest") { ?>
-                    <input type="text" class="form-control col-2 col-sm-2 col-sm-0" style="width: 82%;" id="comment_item" name="comment_item">
+                    <input type="text" class="form-control col-2 col-sm-2 col-sm-0" style="width: 82%;" id="comment_item" name="comment_item" required>
                     <button class="btn btn-primary" type="submit" name="taskcomment">Comment</button>
                     <?php } ?>
                 </form>
